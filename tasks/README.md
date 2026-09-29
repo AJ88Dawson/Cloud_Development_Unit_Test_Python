@@ -35,8 +35,8 @@ Check it works:
 python -m unittest discover
 ```
 
-You should see `Ran 46 tests` and `OK (skipped=43)`. The three that pass
-are the worked examples. The 43 skips are the tests you are about to write,
+You should see `Ran 58 tests` and `OK (skipped=55)`. The three that pass
+are the worked examples. The 55 skips are the tests you are about to write,
 and that count is your progress bar. The repository's
 [`README.md`](../README.md) has the full setup and running notes.
 

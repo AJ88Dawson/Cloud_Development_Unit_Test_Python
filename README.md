@@ -20,7 +20,7 @@ and you do not need the original Java repository.
 | 1 | [Testing existing code](tasks/01_testing_existing_code.md) | `Calculator` | `tests/test_calculator.py` |
 | 2 | [Testing exceptions](tasks/02_testing_exceptions.md) | `UserService` | `tests/test_user_service.py` |
 | 3 | [Mocking](tasks/03_mocking.md) | `UserController` | `tests/test_user_controller.py` |
-| 4 | [TDD (stretch)](tasks/04_stretch_tdd_repository.md) | you write the class | `tests/test_concrete_user_repository.py`, which you create |
+| 4 | [TDD (stretch)](tasks/04_stretch_tdd_repository.md) | you write the class | `tests/test_concrete_user_repository.py` |
 
 ## Prerequisites and setup
 
@@ -67,18 +67,24 @@ On a fresh clone that is green. It looks like this, and this is the real
 output:
 
 ```
-ss.ssssssssssssssssssssssss.ssssssssssssssss.s
+ss.ssssssssssssssssssssssssssssssssssss.ssssssssssssssss.s
 ----------------------------------------------------------------------
-Ran 46 tests in 0.001s
+Ran 58 tests in 0.001s
 
-OK (skipped=43)
+OK (skipped=55)
 ```
 
 Read that last line carefully, because **the skip count is your progress
-bar**. There are 46 tests. Three of them are the worked examples, already
-written, and they pass: that is what the three dots are. The other 43 are
-the ones you are about to write, and until you write them they *skip*
-rather than fail, which is why a fresh clone says `OK`.
+bar**. There are 58 tests. Three of them are the worked examples for
+exercises 1 to 3, already written, and they pass: that is what the three
+dots are. The other 55 are the ones you are about to write, and until you
+write them they *skip* rather than fail, which is why a fresh clone says
+`OK`.
+
+The stretch file is the odd one out. Every test in it skips, including its
+worked example, because the class it tests does not exist until you write
+it. Deleting a skip there makes the test go **red** first, and that is the
+exercise.
 
 Every test you complete moves one test from the skipped column into the
 passed column. When you are finished, the line reads `OK` with no skips at
@@ -327,6 +333,7 @@ python/
     test_calculator.py
     test_user_service.py
     test_user_controller.py
+    test_concrete_user_repository.py   exercise 3 stretch, written test first
 ```
 
 Model answers are not in this repository. Your trainer has them. Finish a

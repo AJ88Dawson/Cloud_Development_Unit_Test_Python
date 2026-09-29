@@ -16,7 +16,7 @@ concrete repository class. In Python that is a plain `list` attribute set in
 `__init__`.
 
 You write: `src/concrete_user_repository.py`
-Your tests: `tests/test_concrete_user_repository.py` (create it)
+Your tests: `tests/test_concrete_user_repository.py`
 
 There are no mocks in this exercise. This is the real implementation, so
 the tests are ordinary state-based tests.
@@ -54,10 +54,12 @@ The guide's own steps, in order:
    `implements` keyword and `UserRepository` is a `Protocol`, so you simply
    write a class with the three methods. Nothing inherits from anything.
 2. Add the empty method stubs.
-3. Create the test class. The Java guide calls it `UserRepositoryTest`; the
-   unittest equivalent is a `class ConcreteUserRepositoryTest(unittest.TestCase)`
-   in a new file `tests/test_concrete_user_repository.py`. Start it with
-   `import unittest`, and build the repository in `setUp`.
+3. The test class is already stubbed for you. The Java guide calls it
+   `UserRepositoryTest`; the unittest equivalent is the
+   `class ConcreteUserRepositoryTest(unittest.TestCase)` waiting in
+   `tests/test_concrete_user_repository.py`, which builds the repository in
+   `setUp`. Every test in it skips, including its worked example, because
+   the class does not exist yet.
 4. Start creating the `register` tests.
 5. Create the implementation of `ConcreteUserRepository.register()` **as you
    write the test**. Write one failing test, write just enough code to pass
