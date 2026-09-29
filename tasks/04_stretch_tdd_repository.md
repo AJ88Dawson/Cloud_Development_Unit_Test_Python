@@ -17,8 +17,6 @@ concrete repository class. In Python that is a plain `list` attribute set in
 
 You write: `src/concrete_user_repository.py`
 Your tests: `tests/test_concrete_user_repository.py` (create it)
-Model answers: `solutions/concrete_user_repository.py` and
-`solutions/test_concrete_user_repository_solution.py`
 
 There are no mocks in this exercise. This is the real implementation, so
 the tests are ordinary state-based tests.
@@ -57,8 +55,9 @@ The guide's own steps, in order:
    write a class with the three methods. Nothing inherits from anything.
 2. Add the empty method stubs.
 3. Create the test class. The Java guide calls it `UserRepositoryTest`; the
-   pytest equivalent is the file `tests/test_concrete_user_repository.py`,
-   with plain module-level functions rather than a class.
+   unittest equivalent is a `class ConcreteUserRepositoryTest(unittest.TestCase)`
+   in a new file `tests/test_concrete_user_repository.py`. Start it with
+   `import unittest`, and build the repository in `setUp`.
 4. Start creating the `register` tests.
 5. Create the implementation of `ConcreteUserRepository.register()` **as you
    write the test**. Write one failing test, write just enough code to pass
@@ -68,7 +67,7 @@ The guide's own steps, in order:
 Red, green, refactor. Run the suite after every single step:
 
 ```
-pytest tests/test_concrete_user_repository.py
+python -m unittest tests.test_concrete_user_repository
 ```
 
 A test that has never been seen to fail has not been shown to test
@@ -81,7 +80,7 @@ and `src/concrete_user_repository.py` contains nothing that was not
 demanded by a test you had already watched fail.
 
 ```
-pytest
+python -m unittest discover
 ```
 
 reports no skips and no failures.

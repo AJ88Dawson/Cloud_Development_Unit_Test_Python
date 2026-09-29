@@ -11,7 +11,6 @@ package; here they are:
 | `UserController` | `src/user_controller.py` |
 
 Your tests: `tests/test_user_controller.py`
-Model answers: `solutions/test_user_controller_solution.py`
 
 ## Part 1 - Update the test plan from exercise 2
 
@@ -59,6 +58,7 @@ ideas map across one for one:
 | `when(repo.login(u)).thenThrow(...)` | `repository.login.side_effect = ValueError(...)` |
 | `verify(repo).register(user)` | `repository.register.assert_called_once_with(user)` |
 | `verify(repo, never()).register(user)` | `repository.register.assert_not_called()` |
+| `@BeforeEach` building both | `setUp`, building both onto `self` |
 
 There is no annotation processor and no test runner extension. A
 `MagicMock` is just an object that answers to any attribute, and because
@@ -78,7 +78,7 @@ worked example; the rest are stubs that skip until you write them. Run
 them from the repository root:
 
 ```
-pytest tests/test_user_controller.py
+python -m unittest tests.test_user_controller
 ```
 
 ## What to verify, not just assert
@@ -99,7 +99,7 @@ Every stub in `tests/test_user_controller.py` has gone from skipped to
 passing:
 
 ```
-pytest tests/test_user_controller.py
+python -m unittest tests.test_user_controller
 ```
 
 Then move on to [the stretch task](04_stretch_tdd_repository.md).

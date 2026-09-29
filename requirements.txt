@@ -1,1 +1,12 @@
-pytest>=8.0
+# No third-party packages are needed for these exercises.
+#
+# The test framework is `unittest`, which is part of the Python standard
+# library, and the mocking library is `unittest.mock`, which is part of
+# `unittest`. Both ship with Python itself, so there is nothing to install
+# and `pip install -r requirements.txt` will do nothing. It is kept as a
+# file so that the answer to "what do I need to install?" is written down
+# rather than assumed.
+#
+# The earlier version of this repository used pytest. It is no longer used
+# anywhere: the tests are unittest.TestCase classes and are run with
+# `python -m unittest discover`.

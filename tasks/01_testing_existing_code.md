@@ -7,7 +7,6 @@ environment described in [`README.md`](README.md) and you are ready.
 
 Source: `src/calculator.py`
 Your tests: `tests/test_calculator.py`
-Model answers: `solutions/test_calculator_solution.py`
 
 ## Part 1 - Create a test plan
 
@@ -42,34 +41,36 @@ Open **`tests/test_calculator.py`**. One test is written for you as a worked
 example. Every other test is a stub that skips until you write it:
 
 ```python
-@pytest.mark.skip(reason="TODO - delete this line and write the test")
-def test_divide_raises_value_error_when_the_divisor_is_zero(calculator):
+@unittest.skip("TODO - delete this line and write the test")
+def test_divide_raises_value_error_when_the_divisor_is_zero(self):
     pass
 ```
 
-Delete the `@pytest.mark.skip` line and replace `pass` with your arrange /
+Delete the `@unittest.skip` line and replace `pass` with your arrange /
 act / assert. Name any extra tests of your own after what they assert, the
-same way these are named.
+same way these are named, and add them as further methods on the same
+`CalculatorTest` class.
 
 Run your tests from the repository root:
 
 ```
-pytest
+python -m unittest discover
 ```
 
 or just this file:
 
 ```
-pytest tests/test_calculator.py
+python -m unittest tests.test_calculator
 ```
 
 ## Python notes
 
 * `Calculator.divide` raises `ValueError` where the Java version raised
-  `IllegalArgumentException`. Assert it with `pytest.raises(ValueError)`,
-  which is the pytest equivalent of JUnit's `assertThrows`.
-* For decimal arithmetic use `pytest.approx`, because `0.1 + 0.2` is not
-  exactly `0.3` in binary floating point.
+  `IllegalArgumentException`. Assert it with `self.assertRaises(ValueError)`
+  used as a context manager, which is the unittest equivalent of JUnit's
+  `assertThrows`.
+* For decimal arithmetic use `self.assertAlmostEqual`, because `0.1 + 0.2`
+  is not exactly `0.3` in binary floating point.
 * `sys.float_info.max` and `sys.float_info.min` are the equivalents of
   `Double.MAX_VALUE` and `Double.MIN_VALUE`.
 * There is one `float` type rather than `double`, so `add(1, 2)` returns the
@@ -81,7 +82,7 @@ Every stub in `tests/test_calculator.py` has gone from skipped to passing,
 and the summary line no longer reports any skips from that file:
 
 ```
-pytest tests/test_calculator.py
+python -m unittest tests.test_calculator
 ```
 
 Your plan's **Actual output** column is filled in. Where it differs from

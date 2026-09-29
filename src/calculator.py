@@ -5,7 +5,8 @@ for every parameter and return value. Python has one built-in float type
 and no static typing, so the type hints below are documentation only:
 nothing stops a caller passing an int, and `add(1, 2)` returns the int 3
 rather than 3.0. That is a genuine difference from Java and your tests
-should be written with it in mind (use pytest.approx for float maths).
+should be written with it in mind (use assertAlmostEqual for float
+maths).
 """
 
 

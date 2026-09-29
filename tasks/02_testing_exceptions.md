@@ -7,7 +7,6 @@ Eclipse import: activate the virtual environment described in
 
 Source: `src/user_service.py`
 Your tests: `tests/test_user_service.py`
-Model answers: `solutions/test_user_service_solution.py`
 
 ## Part 1 - Create a test plan
 
@@ -56,10 +55,10 @@ worked example; the rest are stubs that skip until you write them. The
 pattern is:
 
 ```python
-with pytest.raises(ValueError) as exception_info:
-    service.register("bob", "Codes123")
+with self.assertRaises(ValueError) as context:
+    self.service.register("bob", "Codes123")
 
-assert str(exception_info.value) == "Username must contain at least 4 characters"
+self.assertEqual(str(context.exception), "Username must contain at least 4 characters")
 ```
 
 **Assert the exact message, not just the exception type.** Several rules
@@ -70,7 +69,7 @@ right.
 Run your tests from the repository root:
 
 ```
-pytest tests/test_user_service.py
+python -m unittest tests.test_user_service
 ```
 
 ## Every exception you need a case for
@@ -96,7 +95,7 @@ Every stub in `tests/test_user_service.py` has gone from skipped to
 passing:
 
 ```
-pytest tests/test_user_service.py
+python -m unittest tests.test_user_service
 ```
 
 Your plan's **Actual output** column is filled in, including the honest

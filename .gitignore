@@ -10,7 +10,6 @@ __pycache__/
 *$py.class
 
 # Test and coverage output
-.pytest_cache/
 .coverage
 .coverage.*
 htmlcov/

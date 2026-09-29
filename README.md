@@ -1,27 +1,44 @@
 # Unit testing exercises (Python)
 
-SDL3 Module 5: Testing. Three exercises in writing unit tests with pytest,
-plus a test-driven development stretch task.
+## What this is
 
-This is a Python translation of the Java exercise repository. The classes do
-the same things and raise equivalent exceptions, so the exercise guide still
-applies. Where Python genuinely cannot mirror Java, the source says so in a
-comment. See **Differences from the Java version** below.
+Four exercises in writing unit tests, for **SDL3 Module 5: Testing**. You
+write the tests; the code under test is already here.
 
-**Start with [`tasks/README.md`](tasks/README.md)**, which holds the full
-exercise brief. This repository is self-contained: you do not need the PDF
-exercise guide or the original Java repository.
+This repository is the Python version of **002 - SDL3M5 - Testing Exercise
+Guide**. The guide is written for Java and JUnit, and this is a faithful
+translation of it: the same exercises, the same parts, the same test plan
+tables, the same classes doing the same things and raising equivalent
+exceptions.
 
-## Setting up
+**The exercise brief lives in [`tasks/`](tasks/README.md). Start there.**
+This repository is self-contained: you do not need the PDF exercise guide
+and you do not need the original Java repository.
 
-You need Python 3.10 or newer. Built and verified on 3.12.10.
+| | Exercise | Class under test | The file you edit |
+| - | -------- | ---------------- | ----------------- |
+| 1 | [Testing existing code](tasks/01_testing_existing_code.md) | `Calculator` | `tests/test_calculator.py` |
+| 2 | [Testing exceptions](tasks/02_testing_exceptions.md) | `UserService` | `tests/test_user_service.py` |
+| 3 | [Mocking](tasks/03_mocking.md) | `UserController` | `tests/test_user_controller.py` |
+| 4 | [TDD (stretch)](tasks/04_stretch_tdd_repository.md) | you write the class | `tests/test_concrete_user_repository.py`, which you create |
+
+## Prerequisites and setup
+
+You need **Python 3.10 or newer**. Built and verified on **3.12.10**. Check
+what you have:
+
+```
+python --version
+```
+
+Create and activate a virtual environment in the repository root (the folder
+this README is in).
 
 Windows (PowerShell):
 
 ```
 python -m venv venv
 venv\Scripts\Activate.ps1
-pip install -r requirements.txt
 ```
 
 macOS and Linux:
@@ -29,49 +46,276 @@ macOS and Linux:
 ```
 python3 -m venv venv
 source venv/bin/activate
-pip install -r requirements.txt
 ```
 
-## Running the tests
+**There is nothing to `pip install`.** The test framework is `unittest`,
+which is part of the Python standard library, and the mocking library is
+`unittest.mock`, which is part of `unittest`. Both arrive with Python
+itself. `requirements.txt` is present, and says exactly that. You do not
+strictly need a virtual environment either, but making one is the right
+habit and costs you two commands.
 
-From the project root (the folder containing `pytest.ini`):
+## How to run the tests
+
+From the repository root:
 
 ```
-pytest
+python -m unittest discover
 ```
 
-On a fresh clone this passes. The tests you have not written yet are marked
-as skipped rather than failed, so the summary line shows how far you have
-got:
+On a fresh clone that is green. It looks like this, and this is the real
+output:
 
 ```
-3 passed, 43 skipped
+ss.ssssssssssssssssssssssss.ssssssssssssssss.s
+----------------------------------------------------------------------
+Ran 46 tests in 0.001s
+
+OK (skipped=43)
 ```
+
+Read that last line carefully, because **the skip count is your progress
+bar**. There are 46 tests. Three of them are the worked examples, already
+written, and they pass: that is what the three dots are. The other 43 are
+the ones you are about to write, and until you write them they *skip*
+rather than fail, which is why a fresh clone says `OK`.
+
+Every test you complete moves one test from the skipped column into the
+passed column. When you are finished, the line reads `OK` with no skips at
+all.
 
 Useful variations:
 
 ```
-pytest -v                         # one line per test
-pytest tests/test_calculator.py   # a single file
-pytest -k divide                  # tests whose name contains "divide"
-pytest solutions                  # the model answers, all passing
+python -m unittest discover -v          one line per test, with skip reasons
+python -m unittest tests.test_calculator        a single file
+python -m unittest tests.test_calculator.CalculatorTest.test_add_returns_the_sum_of_two_small_numbers
 ```
+
+The `-v` form is worth running at least once. It names every test and
+prints the reason beside each skip:
+
+```
+test_add_returns_the_sum_of_two_small_numbers (tests.test_calculator.CalculatorTest.test_add_returns_the_sum_of_two_small_numbers)
+WORKED EXAMPLE - this is test case 1 from the guide's test plan. ... ok
+test_divide_raises_value_error_when_the_divisor_is_zero (tests.test_calculator.CalculatorTest.test_divide_raises_value_error_when_the_divisor_is_zero) ... skipped 'TODO - delete this line and write the test'
+```
+
+A test with a docstring gets its first line printed underneath the test
+name, which is why the first one takes two lines. That is a good reason to
+give your own tests a one-line docstring.
+
+> `tests/__init__.py` is what makes `from calculator import Calculator`
+> work: it puts `src/` on the import path. You do not need to change it.
+
+## How to do one TODO
+
+Every test you have to write looks like this:
+
+```python
+@unittest.skip("TODO - delete this line and write the test")
+def test_divide_raises_value_error_when_the_divisor_is_zero(self):
+    # Should use `with self.assertRaises(ValueError) as context:` and
+    # check the message is "Division by zero: divisor must not be 0".
+    pass
+```
+
+Two steps:
+
+1. **Delete the `@unittest.skip(...)` line.** That is the whole of the
+   first step. The test now runs instead of skipping.
+2. **Replace `pass`** with your arrange / act / assert. The comment above
+   `pass` tells you what the test should assert. Delete it once you have
+   written the test, or keep it, as you prefer.
+
+So the example above becomes:
+
+```python
+def test_divide_raises_value_error_when_the_divisor_is_zero(self):
+    # Arrange
+    num1 = 30
+    num2 = 0
+
+    # Act and Assert
+    with self.assertRaises(ValueError) as context:
+        self.calculator.divide(num1, num2)
+
+    self.assertEqual(str(context.exception), "Division by zero: divisor must not be 0")
+```
+
+Run the suite again. The skip count drops by one and the pass count rises
+by one.
+
+Write extra tests of your own whenever your test plan calls for one. Add
+another method to the same class, name it after what it asserts the way
+these are named, and it will be picked up automatically: `unittest` runs
+every method whose name starts with `test_`.
+
+## The code you are working with
+
+All of it is in `src/`. **Do not change anything in `src/`.** Your job is to
+test it as it stands.
+
+### `src/calculator.py` - exercise 1
+
+```python
+class Calculator:
+    def add(self, num1: float, num2: float) -> float
+    def subtract(self, num1: float, num2: float) -> float
+    def multiply(self, num1: float, num2: float) -> float
+    def divide(self, num1: float, num2: float) -> float
+```
+
+No state is kept between calls. `divide` raises
+`ValueError("Division by zero: divisor must not be 0")` when `num2` is `0`.
+The type hints say `float`, but nothing enforces them: `add(1, 2)` returns
+the integer `3`.
+
+### `src/user_service.py` - exercise 2
+
+```python
+class UserService:
+    def __init__(self)
+    def register(self, username, password) -> str
+    def login(self, username, password) -> str
+```
+
+Registered users are held in memory in a `dict` keyed by username.
+`register` validates the username and password, stores them, and returns the
+**trimmed** username. `login` returns the trimmed username when the
+credentials match. Both raise `ValueError` for broken rules;
+`login` raises `RuntimeError("Invalid username supplied")` for a user that
+was never registered. The exact messages are listed in
+[`tasks/02_testing_exceptions.md`](tasks/02_testing_exceptions.md), and
+asserting the exact message is the point of the exercise.
+
+### `src/user.py` - exercise 3
+
+```python
+@dataclass
+class User:
+    id: int = 0
+    username: str = ""
+    password: str = ""
+```
+
+A data object. `@dataclass` generates the constructor, `__eq__` and
+`__repr__`, so `User(id=1, username="bobby", password="Codes123")` works and
+two Users with the same three values compare equal. Construct one with
+keyword arguments, as in that example.
+
+### `src/user_repository.py` - exercise 3
+
+```python
+class UserRepository(Protocol):
+    def exists(self, trimmed_username: str) -> bool
+    def register(self, user: User) -> User
+    def login(self, user: User) -> User
+```
+
+The Java interface, as a `typing.Protocol`. Nothing implements it in this
+repository: in exercise 3 you replace it with a mock, and in the stretch
+task you write a real class that satisfies it.
+
+### `src/user_controller.py` - exercise 3
+
+```python
+class UserController:
+    def __init__(self, user_repository)
+    def register(self, user: User) -> User
+    def login(self, user: User) -> User
+```
+
+The class under test in exercise 3. It takes its repository as a
+constructor argument, which is exactly what lets you hand it a mock. Its
+`register` runs the same validation rules as `UserService.register`, but
+asks `repository.exists(trimmed_username)` about uniqueness and then calls
+`repository.register(user)`. Its `login` checks only that the user,
+username and password are present, then hands the whole `User` to
+`repository.login(user)`.
+
+## The framework: unittest
+
+`unittest` is Python's standard-library test framework. It is a direct
+descendant of JUnit, which is why it looks so familiar. Nothing here needs
+installing.
+
+These are the exact names you will type:
+
+| You write | What it is for |
+| --------- | -------------- |
+| `import unittest` | the only import the framework needs |
+| `class CalculatorTest(unittest.TestCase)` | the test class. Every method on it whose name starts with `test_` is a test, and each test gets its own fresh instance of the class, so nothing leaks between tests. |
+| `def setUp(self)` | runs before **every** test method. Build the object under test here and hang it on `self`. |
+| `def tearDown(self)` | runs after every test method, even when the test fails. For closing anything you opened. None of these exercises need it. |
+| `self.assertEqual(a, b)` | fails unless `a == b`. Your main assertion. |
+| `self.assertTrue(x)` / `self.assertFalse(x)` | fails unless the value is truthy / falsy. |
+| `with self.assertRaises(ValueError) as context:` | the block must raise that exception, or the test fails. Afterwards `context.exception` is the exception object, so `str(context.exception)` gives you the message to assert on. |
+| `self.assertAlmostEqual(a, b)` | equality for decimals. `0.1 + 0.2` is not exactly `0.3` in binary floating point, so `assertEqual` on that would fail. |
+| `@unittest.skip("reason")` | skips the test and prints the reason. This is what marks each TODO. |
+| `from unittest.mock import MagicMock` | a stand-in object that answers to any attribute or method. Exercise 3's fake repository. |
+| `mock.method.return_value = x` | make a mocked method return `x`. |
+| `mock.method.side_effect = ValueError("...")` | make a mocked method raise instead of return. |
+| `mock.method.assert_called_once_with(a)` | fails unless that method was called exactly once, with exactly that argument. |
+| `mock.method.assert_not_called()` | fails if it was called at all. Use it to prove that failed validation never reached the repository. |
+| `from unittest.mock import patch` | replaces something **where it is used**, as a decorator or a `with` block. You do not need it here, because `UserController` takes its repository as a constructor argument. Reach for it when a dependency is imported or constructed inside the code under test and cannot be injected. |
+
+## Java to Python: the differences
+
+You have just done these exercises in Java with JUnit. You are doing them
+again in Python with unittest, and the code under test behaves the same
+way, so **you do not need any of this table to finish the work.** Carrying
+what you already know across is the whole point, and `unittest` was chosen
+over the alternatives precisely because it mirrors JUnit so closely.
+
+The table is here for a different reason. Seeing one exercise in two
+languages shows you which parts of what you know are about **testing** and
+which parts were only ever about **Java**. A test class, a fixture method,
+an assertion, an expected exception and a mocked collaborator are ideas.
+`@BeforeEach` and `assertThrows` are spellings. That distinction is the
+thing you gain here, and it is what makes the third language cheap.
+
+| Java / JUnit / Mockito | Python / unittest | Notes |
+| ---------------------- | ----------------- | ----- |
+| `class CalculatorTest` with `@Test` methods | `class CalculatorTest(unittest.TestCase)` with `test_` methods | Same idea, different marker. JUnit finds tests by the annotation; unittest finds them by the method name prefix, so there is nothing to import and nothing to forget. |
+| `assertEquals(expected, actual)` | `self.assertEqual(first, second)` | **Watch the argument order.** JUnit is strict: expected first. unittest has no expected and no actual, and the failure message reads `first != second` whichever way round you put them. Pick an order and be consistent. |
+| `assertThrows(IllegalArgumentException.class, () -> c.divide(1, 0))` | `with self.assertRaises(ValueError): c.divide(1, 0)` | A **context manager**, not a lambda. Add `as context` and `str(context.exception)` is the message, the equivalent of calling `getMessage()` on what `assertThrows` returned. |
+| `assertTrue` / `assertFalse` | `self.assertTrue` / `self.assertFalse` | The same, with `self.` in front. |
+| `@BeforeEach void setUp()` | `def setUp(self)` | Same job, same timing: before every test. JUnit also gives you `@AfterEach`; that is `tearDown`. |
+| `@Disabled("reason")` | `@unittest.skip("reason")` | Same job. Every TODO in this repository carries one, which is why a fresh clone is green. |
+| `IllegalArgumentException` | `ValueError` | The standard Python exception for an argument of the right type with an unacceptable value. That is what `IllegalArgumentException` means. |
+| `RuntimeException` | `RuntimeError` | The closest built-in equivalent. |
+| Checked exceptions and `throws` clauses | nothing | Python has no checked exceptions. What a method can raise is documented in its docstring and enforced only by your tests, which raises the stakes on your test plan. |
+| Mockito | `unittest.mock` | Standard library. No dependency to add, no annotation processor, no runner extension. |
+| `@Mock UserRepository repository` | `repository = MagicMock()` | A `MagicMock` answers to any attribute you ask for, so it needs to know nothing about `UserRepository`. |
+| `@InjectMocks UserController controller` | `controller = UserController(repository)` | Constructor injection, written out by hand. No annotation, and nothing magic. |
+| `when(repo.exists("bob")).thenReturn(true)` | `repository.exists.return_value = True` | Stubbing is an assignment, not a call chain. |
+| `when(repo.login(u)).thenThrow(new RuntimeException())` | `repository.login.side_effect = RuntimeError(...)` | `side_effect` is how a mock raises instead of returning. |
+| `verify(repo).register(user)` | `repository.register.assert_called_once_with(user)` | Verification happens **after** the act, in both. `assert_called_with` checks the most recent call; `assert_called_once_with` also checks that there was exactly one. |
+| `verify(repo, never()).register(user)` | `repository.register.assert_not_called()` | Proving nothing happened is as much a test as proving something did. |
+| `interface UserRepository` | `class UserRepository(Protocol)` | A `Protocol` is **structural**: anything with matching methods satisfies it, with no `implements` and no subclassing. That is exactly why a `MagicMock` can be passed straight in. |
+| JavaBean: private fields, getters, setters, `equals`, `hashCode`, `toString` | `@dataclass` | The dataclass generates the constructor, `__eq__` and `__repr__`. Attributes are public, so getters and setters add nothing. |
+| `HashMap`, unspecified iteration order | `dict`, insertion ordered | Nothing here depends on ordering, but do not write a test that does, or the two language versions will disagree. |
+| `String.matches()` | `re.fullmatch()` | Both match the **whole** string. `re.match()` only anchors at the start, which is a different question. |
+| `int` and `double` are different types; `1/2` is `0` | one number type in practice; `1/2` is `0.5` | Python has no integer division on `/`, so the classic Java surprise where `1/2` is `0` does not happen. `//` is the one that truncates. `add(1, 2)` returns the int `3`, not `3.0`, and `Calculator` takes whatever you hand it. |
+| `Double.MAX_VALUE`, `Double.MIN_VALUE` | `sys.float_info.max`, `sys.float_info.min` | The borderline values exercise 1 asks for. Overflow gives `math.inf`, as it does in Java. |
+| `assertEquals(0.3, actual, 0.0001)` | `self.assertAlmostEqual(actual, 0.3)` | Both exist because binary floating point cannot represent `0.1` exactly, in either language. |
+| Static types on parameters, checked by the compiler | type hints, checked by nothing | A hint is documentation. Nothing stops a caller passing the wrong type, so a Java compile error becomes a Python test case. |
 
 ## Layout
 
 ```
 python/
   README.md                 this file
-  CODE_CORRECTIONS.md       what was wrong in the original and what changed
-  tasks/                    the exercise briefs, start here
+  CODE_CORRECTIONS.md       two defects in the original Java code, and what changed
+  requirements.txt          nothing to install, and it says so
+  tasks/                    the exercise briefs. Start here.
     README.md               contents page and running order
     01_testing_existing_code.md
     02_testing_exceptions.md
     03_mocking.md
     04_stretch_tdd_repository.md
     TEST_PLAN_TEMPLATE.md   the test plan tables to fill in
-  requirements.txt          pytest, and nothing else
-  pytest.ini                puts src/ on the import path
   src/                      the code under test. Do not change it.
     calculator.py           exercise 1
     user_service.py         exercise 2
@@ -79,121 +323,11 @@ python/
     user_repository.py      exercise 3, a typing.Protocol
     user_controller.py      exercise 3, the class you will mock around
   tests/                    your work goes here
+    __init__.py             puts src/ on the import path. Leave it alone.
     test_calculator.py
     test_user_service.py
     test_user_controller.py
-  solutions/                model answers, run with "pytest solutions"
 ```
 
-## How the skeletons work
-
-Each test file contains:
-
-* one fully worked example, so you can see the shape of a pytest test;
-* a TODO stub for every remaining test, each with a one-line comment saying
-  what it should assert.
-
-Every stub carries a marker:
-
-```python
-@pytest.mark.skip(reason="TODO - delete this line and write the test")
-def test_divide_raises_value_error_when_the_divisor_is_zero(calculator):
-    pass
-```
-
-To do one: delete the `@pytest.mark.skip` line and replace `pass` with your
-arrange / act / assert. Name your own extra tests after what they assert,
-the same way these are named.
-
-## The exercises
-
-The full brief for each exercise, with the guide's own test plan tables, is
-in [`tasks/`](tasks/README.md). What follows is the Python-specific summary.
-
-### Exercise 1 - testing existing code (`src/calculator.py`)
-
-**Part 1.** Write a test plan for all four `Calculator` methods. At least
-three cases per method. Cover borderline values (what is the largest number
-you can add? the smallest?) as well as one normal combination.
-
-**Part 2.** Implement the plan in `tests/test_calculator.py`.
-
-Python notes: `Calculator.divide` raises `ValueError` where the Java version
-raised `IllegalArgumentException`. Use `pytest.raises(ValueError)` to assert
-it. For decimal arithmetic use `pytest.approx`, because `0.1 + 0.2` is not
-exactly `0.3` in binary floating point. `sys.float_info.max` and
-`sys.float_info.min` are the equivalents of `Double.MAX_VALUE` and
-`Double.MIN_VALUE`.
-
-### Exercise 2 - testing exceptions (`src/user_service.py`)
-
-**Part 1.** Write a test plan for `register()` and `login()`, with a case for
-every exception either can raise.
-
-**Part 2.** Implement it in `tests/test_user_service.py`.
-
-The pattern is:
-
-```python
-with pytest.raises(ValueError) as exception_info:
-    service.register("bob", "Codes123")
-
-assert str(exception_info.value) == "Username must contain at least 4 characters"
-```
-
-Every test asked for here can pass. When one goes red, read the message
-before assuming your test is wrong: the order the validation rules run in
-decides which message you get, and one row of the exercise guide's own test
-plan gets that wrong. `CODE_CORRECTIONS.md` has the detail.
-
-### Exercise 3 - mocking (`src/user_controller.py`)
-
-**Part 1.** Adapt the exercise 2 plan for `UserController`. Add a Class
-column. `register()` gains an exception decided by the repository;
-`login()` loses most of its exceptions because the repository handles them.
-
-**Part 2.** Implement it in `tests/test_user_controller.py` with the
-repository **mocked**.
-
-The guide names Mockito. Mockito is a Java library, so in Python we use
-`unittest.mock` from the standard library. There is nothing to install.
-
-| Mockito | unittest.mock |
-| ------- | ------------- |
-| `@Mock UserRepository repository` | `repository = MagicMock()` |
-| `@InjectMocks UserController controller` | `controller = UserController(repository)` |
-| `when(repo.exists("bob")).thenReturn(true)` | `repository.exists.return_value = True` |
-| `when(repo.login(u)).thenThrow(...)` | `repository.login.side_effect = ValueError(...)` |
-| `verify(repo).register(user)` | `repository.register.assert_called_once_with(user)` |
-| `verify(repo, never()).register(user)` | `repository.register.assert_not_called()` |
-
-`@patch` is the other half of `unittest.mock`. You do not need it here,
-because `UserController` takes its repository as a constructor argument, so
-you can simply hand it a `MagicMock`. Reach for `@patch` when a dependency is
-imported or constructed inside the code under test and you cannot inject it.
-
-**Part 3 (stretch) - test-driven development.** Write a test plan for the
-three `UserRepository` methods, then build a `ConcreteUserRepository` that
-implements the protocol, storing users in a list. Work test first: write one
-failing test, write just enough code to pass it, repeat. Put the class in
-`src/concrete_user_repository.py` and the tests in
-`tests/test_concrete_user_repository.py`. See
-[`tasks/04_stretch_tdd_repository.md`](tasks/04_stretch_tdd_repository.md).
-
-## Differences from the Java version
-
-| Java | Python | Why |
-| ---- | ------ | --- |
-| `IllegalArgumentException` | `ValueError` | The standard Python exception for an argument of the right type but an unacceptable value. |
-| `RuntimeException` | `RuntimeError` | Closest built-in equivalent. |
-| Checked exceptions, `throws` clauses | nothing | Python has no checked exceptions. What a function can raise is documented in its docstring and enforced only by your tests. |
-| Static types on parameters | type hints | Hints are documentation. Nothing stops a caller passing the wrong type, so a Java compiler error becomes a Python test case. |
-| `interface UserRepository` | `typing.Protocol` | Structural, so a `MagicMock` satisfies it with no subclassing. An ABC would be stricter but would get in the way of mocking. |
-| JavaBean with getters, setters, `equals`, `hashCode`, `toString` | `@dataclass` | The dataclass generates the constructor, equality and repr. Attributes are public, so getters and setters add nothing. |
-| `HashMap`, unspecified iteration order | `dict`, insertion ordered | Nothing here depends on ordering, but do not write a test that does. |
-| `String.matches()` | `re.fullmatch()` | Both match the whole string. `re.match()` would only anchor at the start and would change the behaviour. |
-| `matches(".*[A-Z].*")` in the password rules | `re.search(r"[A-Z]", ...)` | Both ask "does it contain one", which is what the rule says. The original used a whole-string match, which asked a different question and named the wrong rule. See `CODE_CORRECTIONS.md`. |
-| `double` everywhere | one `float` type | `add(1, 2)` returns the int `3`, not `3.0`. Compare decimals with `pytest.approx`. |
-| Mockito `@Mock` / `@InjectMocks` | `unittest.mock.MagicMock` | Standard library, no annotations, no test runner extension. |
-| JUnit `assertThrows` | `pytest.raises` | Used as a context manager. |
-| JUnit `@BeforeEach` | a pytest fixture | Fixtures are requested by name as test arguments. |
+Model answers are not in this repository. Your trainer has them. Finish a
+test, then ask.

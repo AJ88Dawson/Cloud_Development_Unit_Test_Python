@@ -7,15 +7,15 @@ unit testing should not be a fight with code that cannot pass its own
 worked example.
 
 This file is the record: what the original code did, why it was wrong, what
-it does now, and what a student should notice. The source carries a short
-comment at each fix, so a student reading `src/` alone still sees why it is
-written that way.
+it does now, and what to notice. The source carries a short comment at each
+fix, so reading `src/` alone still shows you why it is written that way.
 
 The Java, C# and Python ports of these exercises all carry the same two
 fixes and behave identically.
 
 Everything here is fixed except the third entry, which is a mistake in the
-exercise worksheet rather than in the code. That one is still live.
+exercise worksheet rather than in the code. That one is still live, and
+exercise 2 warns you about it.
 
 ---
 
@@ -65,11 +65,11 @@ original code that case could not pass.
 `UserController.login()` was never affected: it delegates to the
 repository and holds no map of its own.
 
-**Now pinned by:**
-`solutions/test_user_service_solution.py::test_login_returns_the_username_after_a_successful_registration`,
-`::test_login_returns_the_trimmed_username`,
-`::test_login_raises_value_error_when_the_password_is_wrong` and
-`::test_login_raises_runtime_error_when_the_user_was_never_registered`.
+**Now pinned by** four of the model answers for exercise 2, which your
+trainer holds: the successful-registration-then-login case, the trimmed
+username, the wrong password and the user who was never registered. Three
+of them are TODOs in `tests/test_user_service.py`, so you will write them
+yourself.
 
 ---
 
@@ -127,13 +127,12 @@ if not re.search(_HAS_UPPERCASE, trimmed_password): ...
   separate rule and needs its own check and its own message, for example
   `re.fullmatch(r"[A-Za-z0-9]+", trimmed_password)`.
 
-**Now pinned by:**
-`solutions/test_user_service_solution.py::test_register_accepts_a_password_whose_only_digit_is_zero`,
-`::test_register_accepts_a_password_containing_a_symbol`,
-`::test_register_names_the_uppercase_rule_when_only_uppercase_is_missing`,
-`::test_register_names_the_lowercase_rule_when_only_lowercase_is_missing`,
-`::test_register_names_the_number_rule_when_only_a_number_is_missing`,
-and the matching five in `solutions/test_user_controller_solution.py`.
+**Now pinned by** five of the model answers for exercise 2, and the
+matching five for exercise 3: a password whose only digit is zero, a
+password containing a symbol, and one per rule checking that the message
+names the rule that actually failed.
+`test_register_accepts_a_password_whose_only_digit_is_zero` is a TODO in
+`tests/test_user_service.py`, so you will write that one yourself.
 
 ---
 
@@ -156,8 +155,10 @@ genuine thing a test plan has to get right.
 
 The worked example in `tests/test_user_service.py` therefore uses `"Codess"`
 (six characters, no digit), which produces the message the guide intended.
-`solutions/test_user_service_solution.py::test_register_reports_the_length_rule_first_for_the_guides_own_example`
-pins the guide's original input so the discrepancy is on the record, and
-`tasks/02_testing_exceptions.md` reproduces the guide's table with a
-footnote. Worth raising with students: it is a good illustration of why the
-order of validation checks matters to a test plan.
+A model answer pins the guide's original input so the discrepancy is on the
+record, and `tasks/02_testing_exceptions.md` reproduces the guide's table
+with a footnote.
+
+It is a good illustration of why the order of validation checks matters to
+a test plan. Only the first rule to fail produces a message, so a plan that
+does not know the order will predict the wrong one.
