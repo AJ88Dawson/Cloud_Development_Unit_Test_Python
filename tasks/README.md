@@ -77,10 +77,11 @@ then ask.
 ## Two fixes to the original code
 
 Two defects in the original Java code have been fixed here, and the fixes
-are explained in the source at the point of the change.
-[`../CODE_CORRECTIONS.md`](../CODE_CORRECTIONS.md) records what was wrong
-and what changed. It is worth reading: both defects are the kind a test
-suite is supposed to catch.
+are explained in the source at the point of the change. Both were the kind
+a test suite is supposed to catch: `login()` looked users up by password
+rather than by username, and the three password character rules were
+written so that a valid password such as `Codes0` was rejected, with an
+error message naming the wrong rule.
 
 One error in the guide's own worksheet is **not** fixed, because it is in
 the worksheet and not in the code. It is flagged in exercise 2.

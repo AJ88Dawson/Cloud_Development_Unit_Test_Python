@@ -46,7 +46,7 @@ A NOTE BEFORE YOU START
     read the failure message carefully: the order the validation rules run in
     decides which message you get, and that is easy to get wrong in a plan.
     One row of the exercise guide's own test plan has exactly that mistake in
-    it. See CODE_CORRECTIONS.md, and the worked example below.
+    it. See the worked example below.
 """
 
 import unittest

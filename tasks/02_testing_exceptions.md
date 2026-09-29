@@ -35,7 +35,6 @@ produce a test case for every possible exception that could be thrown.
 > so a test plan has to know that order. If you want the "missing number"
 > message, use a six-character password with no digit, such as `"Codess"`.
 > That is what the worked example in `tests/exercise2/test_user_service.py` does.
-> See [`../CODE_CORRECTIONS.md`](../CODE_CORRECTIONS.md).
 
 Row 1 behaves exactly as written.
 

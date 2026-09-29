@@ -315,7 +315,6 @@ thing you gain here, and it is what makes the third language cheap.
 ```
 python/
   README.md                 this file
-  CODE_CORRECTIONS.md       two defects in the original Java code, and what changed
   requirements.txt          nothing to install, and it says so
   tasks/                    the exercise briefs. Start here.
     README.md               contents page and running order

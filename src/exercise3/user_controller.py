@@ -6,8 +6,10 @@ and login() does far less work because the repository is expected to handle
 invalid credentials.
 
 The password patterns are imported from user_service so that the two
-exercises cannot drift apart. See CODE_CORRECTIONS.md for what those rules
-used to look like and why they were changed.
+exercises cannot drift apart. Each one is a plain "contains" search for a
+single character class, used with re.search: at least one uppercase letter,
+at least one lowercase letter and at least one digit, anywhere in the
+password.
 """
 
 import re

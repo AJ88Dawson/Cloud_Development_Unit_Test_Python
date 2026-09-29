@@ -15,7 +15,7 @@ Translation notes:
     so the exceptions a method can raise are documented in comments only.
   * Java's String.matches() matches the WHOLE string. The password rules
     below want "contains one of these", so they use re.search rather than
-    re.fullmatch. See CODE_CORRECTIONS.md.
+    re.fullmatch.
 """
 
 import re

@@ -41,8 +41,7 @@ behaves exactly as written. Row 2 does **not**: `"Codes"` is five
 characters, so the length rule fires first and you get
 `ValueError("Password must contain at least 6 characters")`. That is a
 mistake in the worksheet, not in the code, and it is a good illustration of
-why the order of the validation rules matters to a test plan. See
-`../CODE_CORRECTIONS.md`.
+why the order of the validation rules matters to a test plan.
 
 The Python translation raises `ValueError` where the Java original raises
 `IllegalArgumentException`, and `RuntimeError` where it raises
