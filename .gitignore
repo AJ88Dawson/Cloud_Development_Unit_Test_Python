@@ -1,5 +1,45 @@
+# Virtual environments
 venv/
 .venv/
+env/
+ENV/
+
+# Byte-compiled
 __pycache__/
-*.pyc
+*.py[cod]
+*$py.class
+
+# Test and coverage output
 .pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+coverage.xml
+*.cover
+
+# Packaging
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Type checkers and linters
+.mypy_cache/
+.ruff_cache/
+.dmypy.json
+
+# Editors and IDEs
+.idea/
+.vscode/
+*.swp
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Secrets. Never commit these: git history keeps them even after deletion.
+.env
+*.pem
+*.key
