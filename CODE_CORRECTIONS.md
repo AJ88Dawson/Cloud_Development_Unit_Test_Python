@@ -21,7 +21,7 @@ exercise 2 warns you about it.
 
 ## Fixed 1 - `UserService.login()` looked users up by password
 
-**Where:** `src/user_service.py`, in `login()`.
+**Where:** `src/exercise2/user_service.py`, in `login()`.
 
 The original, ported verbatim from the Java:
 
@@ -68,15 +68,15 @@ repository and holds no map of its own.
 **Now pinned by** four of the model answers for exercise 2, which your
 trainer holds: the successful-registration-then-login case, the trimmed
 username, the wrong password and the user who was never registered. Three
-of them are TODOs in `tests/test_user_service.py`, so you will write them
+of them are TODOs in `tests/exercise2/test_user_service.py`, so you will write them
 yourself.
 
 ---
 
 ## Fixed 2 - the password character rules used `[A-Z|a-z|1-9]`
 
-**Where:** `src/user_service.py`, the three module-level patterns, which
-`src/user_controller.py` imports so both classes share them.
+**Where:** `src/exercise2/user_service.py`, the three module-level patterns, which
+`src/exercise3/user_controller.py` imports so both classes share them.
 
 The original:
 
@@ -132,7 +132,7 @@ matching five for exercise 3: a password whose only digit is zero, a
 password containing a symbol, and one per rule checking that the message
 names the rule that actually failed.
 `test_register_accepts_a_password_whose_only_digit_is_zero` is a TODO in
-`tests/test_user_service.py`, so you will write that one yourself.
+`tests/exercise2/test_user_service.py`, so you will write that one yourself.
 
 ---
 
@@ -153,7 +153,7 @@ This one is **not fixed**, because there is nothing wrong with the code.
 The worksheet is wrong, and the order in which validation rules run is a
 genuine thing a test plan has to get right.
 
-The worked example in `tests/test_user_service.py` therefore uses `"Codess"`
+The worked example in `tests/exercise2/test_user_service.py` therefore uses `"Codess"`
 (six characters, no digit), which produces the message the guide intended.
 A model answer pins the guide's original input so the discrepancy is on the
 record, and `tasks/02_testing_exceptions.md` reproduces the guide's table

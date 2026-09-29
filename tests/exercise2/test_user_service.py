@@ -1,7 +1,7 @@
 """EXERCISE 2: testing exceptions.
 
 WHAT THIS IS
-    The second exercise. `UserService` in src/user_service.py validates a
+    The second exercise. `UserService` in src/exercise2/user_service.py validates a
     username and a password and keeps registered users in memory. Almost
     everything it does wrong, it does by raising. Testing that behaviour is
     the exercise.
@@ -33,9 +33,9 @@ HOW TO RUN
     From the repository root, the whole suite:
         python -m unittest discover
     Just this file:
-        python -m unittest tests.test_user_service
+        python -m unittest tests.exercise2.test_user_service
     One test by name:
-        python -m unittest tests.test_user_service.UserServiceTest.test_register_rejects_a_password_with_no_number
+        python -m unittest tests.exercise2.test_user_service.UserServiceTest.test_register_rejects_a_password_with_no_number
     Add -v for one line per test with the skip reasons.
 
 THE FULL BRIEF
@@ -51,7 +51,7 @@ A NOTE BEFORE YOU START
 
 import unittest
 
-from user_service import UserService
+from exercise2.user_service import UserService
 
 
 class UserServiceTest(unittest.TestCase):
@@ -237,5 +237,5 @@ class UserServiceTest(unittest.TestCase):
 
 
 if __name__ == "__main__":
-    # Lets you run this one file with `python -m tests.test_user_service`.
+    # Lets you run this one file with `python -m tests.exercise2.test_user_service`.
     unittest.main()

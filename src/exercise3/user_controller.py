@@ -12,7 +12,7 @@ used to look like and why they were changed.
 
 import re
 
-from user_service import _HAS_LOWERCASE, _HAS_NUMBER, _HAS_UPPERCASE
+from exercise2.user_service import _HAS_LOWERCASE, _HAS_NUMBER, _HAS_UPPERCASE
 
 
 class UserController:

@@ -1,7 +1,7 @@
 """EXERCISE 1: testing existing code.
 
 WHAT THIS IS
-    The first exercise. `Calculator` in src/calculator.py already works. You
+    The first exercise. `Calculator` in src/exercise1/calculator.py already works. You
     are not writing it and you are not changing it. You are writing the tests
     that prove it does what it claims, which is the skill this module is
     about.
@@ -33,9 +33,9 @@ HOW TO RUN
     From the repository root, the whole suite:
         python -m unittest discover
     Just this file:
-        python -m unittest tests.test_calculator
+        python -m unittest tests.exercise1.test_calculator
     One test by name:
-        python -m unittest tests.test_calculator.CalculatorTest.test_add_returns_the_sum_of_two_small_numbers
+        python -m unittest tests.exercise1.test_calculator.CalculatorTest.test_add_returns_the_sum_of_two_small_numbers
     Add -v to any of those to see one line per test with the skip reasons.
 
 THE FULL BRIEF
@@ -50,7 +50,7 @@ THE FRAMEWORK
 
 import unittest
 
-from calculator import Calculator
+from exercise1.calculator import Calculator
 
 
 class CalculatorTest(unittest.TestCase):
@@ -206,5 +206,5 @@ class CalculatorTest(unittest.TestCase):
 
 
 if __name__ == "__main__":
-    # Lets you run this one file with `python -m tests.test_calculator`.
+    # Lets you run this one file with `python -m tests.exercise1.test_calculator`.
     unittest.main()

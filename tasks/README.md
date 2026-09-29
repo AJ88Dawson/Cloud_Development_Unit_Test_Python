@@ -47,10 +47,10 @@ implement it. Do not skip Part 1: the plan is the exercise.
 
 | | Exercise | Class under test | You edit |
 | - | -------- | ---------------- | -------- |
-| 1 | [Testing existing code](01_testing_existing_code.md) | `src/calculator.py` | `tests/test_calculator.py` |
-| 2 | [Testing exceptions](02_testing_exceptions.md) | `src/user_service.py` | `tests/test_user_service.py` |
-| 3 | [Mocking in a unit test](03_mocking.md) | `src/user_controller.py` | `tests/test_user_controller.py` |
-| 4 | [Test-driven development (stretch)](04_stretch_tdd_repository.md) | you write it | `tests/test_concrete_user_repository.py` |
+| 1 | [Testing existing code](01_testing_existing_code.md) | `src/exercise1/calculator.py` | `tests/exercise1/test_calculator.py` |
+| 2 | [Testing exceptions](02_testing_exceptions.md) | `src/exercise2/user_service.py` | `tests/exercise2/test_user_service.py` |
+| 3 | [Mocking in a unit test](03_mocking.md) | `src/exercise3/user_controller.py` | `tests/exercise3/test_user_controller.py` |
+| 4 | [Test-driven development (stretch)](04_stretch_tdd_repository.md) | you write it | `tests/exercise3/test_concrete_user_repository.py` |
 
 ## The test plan template
 
@@ -66,9 +66,9 @@ one for the solutions. **This repository replaces the first.**
 | The guide says | In this repository |
 | -------------- | ------------------ |
 | Clone the exercises repository | you already have it, this is it |
-| the `exercise1` package | `src/calculator.py` |
-| the `exercise2` package | `src/user_service.py` |
-| the `exercise3` package | `src/user.py`, `src/user_repository.py`, `src/user_controller.py` |
+| the `exercise1` package | `src/exercise1/calculator.py` |
+| the `exercise2` package | `src/exercise2/user_service.py` |
+| the `exercise3` package | `src/exercise3/user.py`, `src/exercise3/user_repository.py`, `src/exercise3/user_controller.py` |
 
 The model answers are not in this repository, and there is nothing to clone
 for them. Your trainer has them. Have a proper go at an exercise first,

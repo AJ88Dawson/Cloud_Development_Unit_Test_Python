@@ -4,14 +4,15 @@ Do this only once exercise 3 is complete.
 
 WHAT THIS IS
     The only exercise where the code under test does not exist yet. There is
-    no src/concrete_user_repository.py in this repository, and there is not
-    meant to be. YOU write it, and you write it TEST FIRST: the test comes
-    before the class, which is the entire point of the exercise.
+    no src/exercise3/concrete_user_repository.py in this repository, and
+    there is not meant to be. YOU write it, and you write it TEST FIRST: the
+    test comes before the class, which is the entire point of the exercise.
 
-    So your first job is to create src/concrete_user_repository.py, beside
-    src/user_repository.py, holding a class called ConcreteUserRepository.
-    The "Concrete" in the name says it is a class, not an interface or an
-    abstract class. Start it empty, add a method only when a test you have
+    So your first job is to create
+    src/exercise3/concrete_user_repository.py, beside
+    src/exercise3/user_repository.py, holding a class called
+    ConcreteUserRepository. The "Concrete" in the name says it is a class,
+    not an interface or an abstract class. Start it empty, add a method only when a test you have
     already watched fail demands it. Store the users in a plain list
     attribute set in __init__: the guide asks for a List<User>, and a list is
     the Python spelling of that. A dict keyed by username would be faster,
@@ -43,7 +44,7 @@ RED, GREEN, REFACTOR, AND WHY EVERY TEST BELOW SKIPS
 
 THE TWO PARTS, AND PART 1 IS NOT OPTIONAL
     Part 1: write the test plan FIRST, for the three methods of
-        src/user_repository.py. Copy tasks/TEST_PLAN_TEMPLATE.md.
+        src/exercise3/user_repository.py. Copy tasks/TEST_PLAN_TEMPLATE.md.
             exists(trimmed_username)  True if that username is already stored
             register(user)            stores the user, returns the stored one
             login(user)               returns the stored user if it matches
@@ -58,13 +59,14 @@ THE TWO PARTS, AND PART 1 IS NOT OPTIONAL
 HOW TO RUN
     From the repository root, this file alone, which is what you will run
     over and over while doing this:
-        python -m unittest tests.test_concrete_user_repository
+        python -m unittest tests.exercise3.test_concrete_user_repository
     One test by name:
-        python -m unittest tests.test_concrete_user_repository.ConcreteUserRepositoryTest.test_exists_returns_false_when_the_repository_is_empty
+        python -m unittest tests.exercise3.test_concrete_user_repository.ConcreteUserRepositoryTest.test_exists_returns_false_when_the_repository_is_empty
     The whole suite:
         python -m unittest discover
     Done looks like: no skips and no failures anywhere, and
-    src/concrete_user_repository.py contains nothing that was not demanded by
+    src/exercise3/concrete_user_repository.py contains nothing that was not
+    demanded by
     a test you had already watched fail.
 
 THE FULL BRIEF
@@ -73,7 +75,7 @@ THE FULL BRIEF
 
 import unittest
 
-from user import User
+from exercise3.user import User
 
 
 class ConcreteUserRepositoryTest(unittest.TestCase):
@@ -93,14 +95,15 @@ class ConcreteUserRepositoryTest(unittest.TestCase):
         "empty repository" cases would pass or fail at random depending on
         the alphabetical order the tests happen to run in.
 
-        The import is INSIDE this method on purpose. src/ has no
+        The import is INSIDE this method on purpose. src/exercise3/ has no
         concrete_user_repository.py until you write it, and a top-level
         import of a missing module would break the whole suite for everybody
         before you had written a line. Once your class exists you may move
-        this import up to the top of the file beside `from user import User`,
-        which is where it would normally live.
+        this import up to the top of the file beside
+        `from exercise3.user import User`, which is where it would normally
+        live.
         """
-        from concrete_user_repository import ConcreteUserRepository
+        from exercise3.concrete_user_repository import ConcreteUserRepository
 
         self.repository = ConcreteUserRepository()
         self.bobby = User(id=1, username="bobby", password="Codes123")
@@ -118,7 +121,8 @@ class ConcreteUserRepositoryTest(unittest.TestCase):
         the shape, but it still skips, and when you delete the skip it will
         FAIL rather than pass, because ConcreteUserRepository does not exist
         yet. That failure is the first step of the exercise, not a problem to
-        work around. Read the error, create src/concrete_user_repository.py
+        work around. Read the error, create
+        src/exercise3/concrete_user_repository.py
         with a class holding an empty users list and an exists() that returns
         False, run again, and watch it go green. Then move to the next test
         and repeat.
@@ -237,5 +241,5 @@ class ConcreteUserRepositoryTest(unittest.TestCase):
 
 if __name__ == "__main__":
     # Lets you run this one file with
-    # `python -m tests.test_concrete_user_repository`.
+    # `python -m tests.exercise3.test_concrete_user_repository`.
     unittest.main()

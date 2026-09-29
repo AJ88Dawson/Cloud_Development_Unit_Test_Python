@@ -6,11 +6,11 @@ package; here they are:
 
 | The guide says | In this repository |
 | -------------- | ------------------ |
-| `User` | `src/user.py`, a `@dataclass` |
-| `UserRepository` interface | `src/user_repository.py`, a `typing.Protocol` |
-| `UserController` | `src/user_controller.py` |
+| `User` | `src/exercise3/user.py`, a `@dataclass` |
+| `UserRepository` interface | `src/exercise3/user_repository.py`, a `typing.Protocol` |
+| `UserController` | `src/exercise3/user_controller.py` |
 
-Your tests: `tests/test_user_controller.py`
+Your tests: `tests/exercise3/test_user_controller.py`
 
 ## Part 1 - Update the test plan from exercise 2
 
@@ -73,12 +73,12 @@ code under test and you cannot inject it.
 The repository methods being mocked are `UserRepository.exists()`,
 `UserRepository.register()` and `UserRepository.login()`.
 
-Open **`tests/test_user_controller.py`**. One test is written for you as a
+Open **`tests/exercise3/test_user_controller.py`**. One test is written for you as a
 worked example; the rest are stubs that skip until you write them. Run
 them from the repository root:
 
 ```
-python -m unittest tests.test_user_controller
+python -m unittest tests.exercise3.test_user_controller
 ```
 
 ## What to verify, not just assert
@@ -95,11 +95,11 @@ For example, when validation fails the repository must never be touched:
 
 ## Done looks like
 
-Every stub in `tests/test_user_controller.py` has gone from skipped to
+Every stub in `tests/exercise3/test_user_controller.py` has gone from skipped to
 passing:
 
 ```
-python -m unittest tests.test_user_controller
+python -m unittest tests.exercise3.test_user_controller
 ```
 
 Then move on to [the stretch task](04_stretch_tdd_repository.md).

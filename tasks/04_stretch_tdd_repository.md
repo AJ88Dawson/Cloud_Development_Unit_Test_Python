@@ -3,7 +3,7 @@
 Do this only once [exercise 3](03_mocking.md) is complete.
 
 If you complete the above task, create a test plan for the methods of the
-`UserRepository` interface (`src/user_repository.py`, a `typing.Protocol`
+`UserRepository` interface (`src/exercise3/user_repository.py`, a `typing.Protocol`
 here rather than a Java interface).
 
 Once a suitable plan is created, create your tests, and implement the
@@ -15,15 +15,15 @@ Store the instances of `User` in a `List<User>` instance variable on the
 concrete repository class. In Python that is a plain `list` attribute set in
 `__init__`.
 
-You write: `src/concrete_user_repository.py`
-Your tests: `tests/test_concrete_user_repository.py`
+You write: `src/exercise3/concrete_user_repository.py`
+Your tests: `tests/exercise3/test_concrete_user_repository.py`
 
 There are no mocks in this exercise. This is the real implementation, so
 the tests are ordinary state-based tests.
 
 ## Part 1 - The plan
 
-Three methods to plan, from `src/user_repository.py`:
+Three methods to plan, from `src/exercise3/user_repository.py`:
 
 | Method | Does |
 | ------ | ---- |
@@ -57,7 +57,7 @@ The guide's own steps, in order:
 3. The test class is already stubbed for you. The Java guide calls it
    `UserRepositoryTest`; the unittest equivalent is the
    `class ConcreteUserRepositoryTest(unittest.TestCase)` waiting in
-   `tests/test_concrete_user_repository.py`, which builds the repository in
+   `tests/exercise3/test_concrete_user_repository.py`, which builds the repository in
    `setUp`. Every test in it skips, including its worked example, because
    the class does not exist yet.
 4. Start creating the `register` tests.
@@ -69,7 +69,7 @@ The guide's own steps, in order:
 Red, green, refactor. Run the suite after every single step:
 
 ```
-python -m unittest tests.test_concrete_user_repository
+python -m unittest tests.exercise3.test_concrete_user_repository
 ```
 
 A test that has never been seen to fail has not been shown to test
@@ -77,8 +77,8 @@ anything, so watch each one go red before you make it green.
 
 ## Done looks like
 
-`tests/test_concrete_user_repository.py` exists, every test in it passes,
-and `src/concrete_user_repository.py` contains nothing that was not
+`tests/exercise3/test_concrete_user_repository.py` exists, every test in it passes,
+and `src/exercise3/concrete_user_repository.py` contains nothing that was not
 demanded by a test you had already watched fail.
 
 ```

@@ -15,7 +15,7 @@ Java differences worth noting:
 
 from typing import Protocol
 
-from user import User
+from exercise3.user import User
 
 
 class UserRepository(Protocol):

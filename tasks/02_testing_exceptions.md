@@ -1,12 +1,12 @@
 # Exercise 2 - Testing exceptions
 
 This exercise uses the `UserService` class. In the Java guide it lives in
-the `exercise2` package; here it is **`src/user_service.py`**. No clone, no
-Eclipse import: activate the virtual environment described in
+the `exercise2` package; here it is **`src/exercise2/user_service.py`**, in a
+folder of the same name. No clone, no Eclipse import: activate the virtual environment described in
 [`README.md`](README.md) and you are ready.
 
-Source: `src/user_service.py`
-Your tests: `tests/test_user_service.py`
+Source: `src/exercise2/user_service.py`
+Your tests: `tests/exercise2/test_user_service.py`
 
 ## Part 1 - Create a test plan
 
@@ -34,7 +34,7 @@ produce a test case for every possible exception that could be thrown.
 > run in a fixed order, and only the first one to fail produces a message,
 > so a test plan has to know that order. If you want the "missing number"
 > message, use a six-character password with no digit, such as `"Codess"`.
-> That is what the worked example in `tests/test_user_service.py` does.
+> That is what the worked example in `tests/exercise2/test_user_service.py` does.
 > See [`../CODE_CORRECTIONS.md`](../CODE_CORRECTIONS.md).
 
 Row 1 behaves exactly as written.
@@ -50,7 +50,7 @@ The table is also in [`TEST_PLAN_TEMPLATE.md`](TEST_PLAN_TEMPLATE.md).
 The `UserService` class has already been created. Use your test plan to
 guide the development of tests for the methods of this class.
 
-Open **`tests/test_user_service.py`**. One test is written for you as a
+Open **`tests/exercise2/test_user_service.py`**. One test is written for you as a
 worked example; the rest are stubs that skip until you write them. The
 pattern is:
 
@@ -69,7 +69,7 @@ right.
 Run your tests from the repository root:
 
 ```
-python -m unittest tests.test_user_service
+python -m unittest tests.exercise2.test_user_service
 ```
 
 ## Every exception you need a case for
@@ -91,11 +91,11 @@ username, and so does `login()`.
 
 ## Done looks like
 
-Every stub in `tests/test_user_service.py` has gone from skipped to
+Every stub in `tests/exercise2/test_user_service.py` has gone from skipped to
 passing:
 
 ```
-python -m unittest tests.test_user_service
+python -m unittest tests.exercise2.test_user_service
 ```
 
 Your plan's **Actual output** column is filled in, including the honest

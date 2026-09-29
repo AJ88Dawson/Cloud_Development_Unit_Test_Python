@@ -1,12 +1,13 @@
 # Exercise 1 - Testing existing code
 
 This exercise uses the `Calculator` class. In the Java guide it lives in the
-`exercise1` package; here it is **`src/calculator.py`**. There is nothing to
-clone and no project to import into Eclipse: activate the virtual
+`exercise1` package; here it is **`src/exercise1/calculator.py`**, in a folder
+of the same name. There is nothing to clone and no project to import into
+Eclipse: activate the virtual
 environment described in [`README.md`](README.md) and you are ready.
 
-Source: `src/calculator.py`
-Your tests: `tests/test_calculator.py`
+Source: `src/exercise1/calculator.py`
+Your tests: `tests/exercise1/test_calculator.py`
 
 ## Part 1 - Create a test plan
 
@@ -37,7 +38,7 @@ that file and fill your copy in.
 The `Calculator` class has already been created. Use your test plan to guide
 the development of tests for the methods of this class.
 
-Open **`tests/test_calculator.py`**. One test is written for you as a worked
+Open **`tests/exercise1/test_calculator.py`**. One test is written for you as a worked
 example. Every other test is a stub that skips until you write it:
 
 ```python
@@ -60,7 +61,7 @@ python -m unittest discover
 or just this file:
 
 ```
-python -m unittest tests.test_calculator
+python -m unittest tests.exercise1.test_calculator
 ```
 
 ## Python notes
@@ -78,11 +79,11 @@ python -m unittest tests.test_calculator
 
 ## Done looks like
 
-Every stub in `tests/test_calculator.py` has gone from skipped to passing,
+Every stub in `tests/exercise1/test_calculator.py` has gone from skipped to passing,
 and the summary line no longer reports any skips from that file:
 
 ```
-python -m unittest tests.test_calculator
+python -m unittest tests.exercise1.test_calculator
 ```
 
 Your plan's **Actual output** column is filled in. Where it differs from

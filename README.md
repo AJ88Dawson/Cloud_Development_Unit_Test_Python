@@ -17,10 +17,10 @@ and you do not need the original Java repository.
 
 | | Exercise | Class under test | The file you edit |
 | - | -------- | ---------------- | ----------------- |
-| 1 | [Testing existing code](tasks/01_testing_existing_code.md) | `Calculator` | `tests/test_calculator.py` |
-| 2 | [Testing exceptions](tasks/02_testing_exceptions.md) | `UserService` | `tests/test_user_service.py` |
-| 3 | [Mocking](tasks/03_mocking.md) | `UserController` | `tests/test_user_controller.py` |
-| 4 | [TDD (stretch)](tasks/04_stretch_tdd_repository.md) | you write the class | `tests/test_concrete_user_repository.py` |
+| 1 | [Testing existing code](tasks/01_testing_existing_code.md) | `Calculator` | `tests/exercise1/test_calculator.py` |
+| 2 | [Testing exceptions](tasks/02_testing_exceptions.md) | `UserService` | `tests/exercise2/test_user_service.py` |
+| 3 | [Mocking](tasks/03_mocking.md) | `UserController` | `tests/exercise3/test_user_controller.py` |
+| 4 | [TDD (stretch)](tasks/04_stretch_tdd_repository.md) | you write the class | `tests/exercise3/test_concrete_user_repository.py` |
 
 ## Prerequisites and setup
 
@@ -94,24 +94,24 @@ Useful variations:
 
 ```
 python -m unittest discover -v          one line per test, with skip reasons
-python -m unittest tests.test_calculator        a single file
-python -m unittest tests.test_calculator.CalculatorTest.test_add_returns_the_sum_of_two_small_numbers
+python -m unittest tests.exercise1.test_calculator        a single file
+python -m unittest tests.exercise1.test_calculator.CalculatorTest.test_add_returns_the_sum_of_two_small_numbers
 ```
 
 The `-v` form is worth running at least once. It names every test and
 prints the reason beside each skip:
 
 ```
-test_add_returns_the_sum_of_two_small_numbers (tests.test_calculator.CalculatorTest.test_add_returns_the_sum_of_two_small_numbers)
+test_add_returns_the_sum_of_two_small_numbers (tests.exercise1.test_calculator.CalculatorTest.test_add_returns_the_sum_of_two_small_numbers)
 WORKED EXAMPLE - this is test case 1 from the guide's test plan. ... ok
-test_divide_raises_value_error_when_the_divisor_is_zero (tests.test_calculator.CalculatorTest.test_divide_raises_value_error_when_the_divisor_is_zero) ... skipped 'TODO - delete this line and write the test'
+test_divide_raises_value_error_when_the_divisor_is_zero (tests.exercise1.test_calculator.CalculatorTest.test_divide_raises_value_error_when_the_divisor_is_zero) ... skipped 'TODO - delete this line and write the test'
 ```
 
 A test with a docstring gets its first line printed underneath the test
 name, which is why the first one takes two lines. That is a good reason to
 give your own tests a one-line docstring.
 
-> `tests/__init__.py` is what makes `from calculator import Calculator`
+> `tests/__init__.py` is what makes `from exercise1.calculator import Calculator`
 > work: it puts `src/` on the import path. You do not need to change it.
 
 ## How to do one TODO
@@ -159,10 +159,12 @@ every method whose name starts with `test_`.
 
 ## The code you are working with
 
-All of it is in `src/`. **Do not change anything in `src/`.** Your job is to
-test it as it stands.
+All of it is in `src/`, grouped one folder per exercise. **Do not change
+anything in `src/`.** Your job is to test it as it stands. The folder names
+are lowercase `exercise1`, `exercise2` and `exercise3` here, in the Java
+repository and in the C# one, so the three stay directly comparable.
 
-### `src/calculator.py` - exercise 1
+### `src/exercise1/calculator.py` - exercise 1
 
 ```python
 class Calculator:
@@ -177,7 +179,7 @@ No state is kept between calls. `divide` raises
 The type hints say `float`, but nothing enforces them: `add(1, 2)` returns
 the integer `3`.
 
-### `src/user_service.py` - exercise 2
+### `src/exercise2/user_service.py` - exercise 2
 
 ```python
 class UserService:
@@ -195,7 +197,7 @@ was never registered. The exact messages are listed in
 [`tasks/02_testing_exceptions.md`](tasks/02_testing_exceptions.md), and
 asserting the exact message is the point of the exercise.
 
-### `src/user.py` - exercise 3
+### `src/exercise3/user.py` - exercise 3
 
 ```python
 @dataclass
@@ -210,7 +212,7 @@ A data object. `@dataclass` generates the constructor, `__eq__` and
 two Users with the same three values compare equal. Construct one with
 keyword arguments, as in that example.
 
-### `src/user_repository.py` - exercise 3
+### `src/exercise3/user_repository.py` - exercise 3
 
 ```python
 class UserRepository(Protocol):
@@ -223,7 +225,7 @@ The Java interface, as a `typing.Protocol`. Nothing implements it in this
 repository: in exercise 3 you replace it with a mock, and in the stretch
 task you write a real class that satisfies it.
 
-### `src/user_controller.py` - exercise 3
+### `src/exercise3/user_controller.py` - exercise 3
 
 ```python
 class UserController:
@@ -323,17 +325,29 @@ python/
     04_stretch_tdd_repository.md
     TEST_PLAN_TEMPLATE.md   the test plan tables to fill in
   src/                      the code under test. Do not change it.
-    calculator.py           exercise 1
-    user_service.py         exercise 2
-    user.py                 exercise 3, a dataclass
-    user_repository.py      exercise 3, a typing.Protocol
-    user_controller.py      exercise 3, the class you will mock around
+    exercise1/
+      __init__.py
+      calculator.py         exercise 1
+    exercise2/
+      __init__.py
+      user_service.py       exercise 2
+    exercise3/
+      __init__.py
+      user.py               exercise 3, a dataclass
+      user_repository.py    exercise 3, a typing.Protocol
+      user_controller.py    exercise 3, the class you will mock around
   tests/                    your work goes here
     __init__.py             puts src/ on the import path. Leave it alone.
-    test_calculator.py
-    test_user_service.py
-    test_user_controller.py
-    test_concrete_user_repository.py   exercise 3 stretch, written test first
+    exercise1/
+      __init__.py           needed, or discovery skips the folder
+      test_calculator.py
+    exercise2/
+      __init__.py
+      test_user_service.py
+    exercise3/
+      __init__.py
+      test_user_controller.py
+      test_concrete_user_repository.py   exercise 3 stretch, written test first
 ```
 
 Model answers are not in this repository. Your trainer has them. Finish a

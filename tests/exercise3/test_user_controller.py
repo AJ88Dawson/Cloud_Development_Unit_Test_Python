@@ -1,7 +1,7 @@
 """EXERCISE 3: mocking in a unit test.
 
 WHAT THIS IS
-    The third exercise. `UserController` in src/user_controller.py runs the
+    The third exercise. `UserController` in src/exercise3/user_controller.py runs the
     same validation rules as exercise 2's UserService, but it no longer keeps
     users itself: it asks a UserRepository whether a username exists and hands
     the user over to be stored. You test the controller ALONE, with a fake
@@ -37,15 +37,15 @@ HOW TO RUN
     From the repository root, the whole suite:
         python -m unittest discover
     Just this file:
-        python -m unittest tests.test_user_controller
+        python -m unittest tests.exercise3.test_user_controller
     One test by name:
-        python -m unittest tests.test_user_controller.UserControllerTest.test_register_saves_a_valid_user_through_the_repository
+        python -m unittest tests.exercise3.test_user_controller.UserControllerTest.test_register_saves_a_valid_user_through_the_repository
     Add -v for one line per test with the skip reasons.
 
 THE FULL BRIEF
     tasks/03_mocking.md. The stretch task that follows it is
     tasks/04_stretch_tdd_repository.md, and its test file already exists at
-    tests/test_concrete_user_repository.py.
+    tests/exercise3/test_concrete_user_repository.py.
 
 MOCKITO DOES NOT EXIST IN PYTHON
     The guide says to use Mockito. Mockito is a Java library, so we use
@@ -72,8 +72,8 @@ MOCKITO DOES NOT EXIST IN PYTHON
 import unittest
 from unittest.mock import MagicMock
 
-from user import User
-from user_controller import UserController
+from exercise3.user import User
+from exercise3.user_controller import UserController
 
 
 class UserControllerTest(unittest.TestCase):
@@ -250,5 +250,5 @@ class UserControllerTest(unittest.TestCase):
 
 
 if __name__ == "__main__":
-    # Lets you run this one file with `python -m tests.test_user_controller`.
+    # Lets you run this one file with `python -m tests.exercise3.test_user_controller`.
     unittest.main()
