@@ -1,0 +1,41 @@
+# Runs the unittest suite automatically on every push and pull request.
+#
+# This is the real goal that "hello-world.yml" was warming you up for:
+# instead of printing a greeting, this workflow sets up Python and runs
+# `python -m unittest discover`, the same command from the README.
+name: Run tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v4
+
+      # actions/setup-python installs the requested Python version onto the
+      # runner and puts it on PATH, the same job `python --version` checks
+      # for locally in the README's prerequisites section.
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      # requirements.txt exists but is empty of real dependencies - unittest
+      # and unittest.mock both ship with Python itself. This step is here
+      # so the workflow keeps working if that ever changes.
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      # The same command from README.md's "How to run the tests" section.
+      # tests/__init__.py puts src/ on the import path, so this works
+      # without any extra configuration.
+      - name: Run the test suite
+        run: python -m unittest discover -v
