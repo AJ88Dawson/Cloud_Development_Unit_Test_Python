@@ -98,142 +98,146 @@ class UserServiceTest(unittest.TestCase):
             str(context.exception), "Password must contain at least 1 number character"
         )
 
-    @unittest.skip("TODO - delete this line and write the test")
     def test_register_returns_the_trimmed_username_for_a_valid_user(self):
-        # The happy path. Assert that register("  bobby  ", "Codes123")
-        # returns "bobby", with the surrounding whitespace stripped. Nothing
-        # is raised. This is the case that proves the trimming, so pass a
-        # username with spaces at both ends deliberately.
-        pass
+        # Arrange
+        username = "  bobby  "
+        password = "Codes123"
 
-    @unittest.skip("TODO - delete this line and write the test")
+        # Act
+        result = self.service.register(username, password)
+
+        # Assert
+        self.assertEqual(result, "bobby")
+
     def test_register_raises_value_error_when_the_username_is_none(self):
-        # Assert ValueError with the exact message "Username must not be
-        # null" for register(None, "Codes123"). None is Python's null.
-        pass
+        # Act and Assert
+        with self.assertRaises(ValueError) as context:
+            self.service.register(None, "Codes123")
 
-    @unittest.skip("TODO - delete this line and write the test")
+        self.assertEqual(str(context.exception), "Username must not be null")
+
     def test_register_raises_value_error_when_the_username_is_whitespace_only(self):
-        # Assert ValueError, message "Username must not be whitespace only",
-        # for a username that is spaces and nothing else, such as "   ".
-        # Note this fires BEFORE the 4-character rule, even though "   " is
-        # three characters, because the emptiness check runs first.
-        pass
+        # Act and Assert
+        with self.assertRaises(ValueError) as context:
+            self.service.register("   ", "Codes123")
 
-    @unittest.skip("TODO - delete this line and write the test")
+        self.assertEqual(str(context.exception), "Username must not be whitespace only")
+
     def test_register_raises_value_error_when_the_password_is_none(self):
-        # Assert ValueError, message "Password must not be null", for
-        # register("bobby", None).
-        pass
+        # Act and Assert
+        with self.assertRaises(ValueError) as context:
+            self.service.register("bobby", None)
 
-    @unittest.skip("TODO - delete this line and write the test")
+        self.assertEqual(str(context.exception), "Password must not be null")
+
     def test_register_raises_value_error_when_the_password_is_whitespace_only(self):
-        # Assert ValueError, message "Password must not be whitespace only",
-        # for a password of spaces only, such as "      ". Six spaces is long
-        # enough to clear the length rule, so this really is the rule under
-        # test.
-        pass
+        # Act and Assert
+        with self.assertRaises(ValueError) as context:
+            self.service.register("bobby", "      ")
 
-    @unittest.skip("TODO - delete this line and write the test")
+        self.assertEqual(str(context.exception), "Password must not be whitespace only")
+
     def test_register_raises_value_error_when_the_username_is_too_short(self):
-        # Assert ValueError, message "Username must contain at least 4
-        # characters", for a three character username such as "bob".
-        # This is a borderline value: four characters is the shortest name
-        # that must be ACCEPTED, so it is worth adding a second test proving
-        # a 4-character username registers fine.
-        pass
+        # Act and Assert. "bob" is three characters; four is the borderline
+        # that must be accepted.
+        with self.assertRaises(ValueError) as context:
+            self.service.register("bob", "Codes123")
 
-    @unittest.skip("TODO - delete this line and write the test")
+        self.assertEqual(str(context.exception), "Username must contain at least 4 characters")
+
     def test_register_raises_value_error_when_the_username_is_already_taken(self):
-        # Arrange by registering "bobby" / "Codes123" successfully, then act
-        # by registering the same username again (any valid password), and
-        # assert ValueError with the message "Username already exists". This
-        # is the one test that depends on state built up earlier in the same
-        # test, which is why setUp hands you a fresh service.
-        pass
+        # Arrange
+        self.service.register("bobby", "Codes123")
 
-    @unittest.skip("TODO - delete this line and write the test")
+        # Act and Assert
+        with self.assertRaises(ValueError) as context:
+            self.service.register("bobby", "Codes456")
+
+        self.assertEqual(str(context.exception), "Username already exists")
+
     def test_register_raises_value_error_when_the_password_is_too_short(self):
-        # Assert ValueError, message "Password must contain at least 6
-        # characters", for a five character password such as "Cod1e". Note
-        # that "Cod1e" satisfies every other password rule, so length is the
-        # only reason it can fail. Six characters is the borderline that must
-        # be accepted.
-        pass
+        # Act and Assert. "Cod1e" is five characters; six is the borderline
+        # that must be accepted.
+        with self.assertRaises(ValueError) as context:
+            self.service.register("bobby", "Cod1e")
 
-    @unittest.skip("TODO - delete this line and write the test")
+        self.assertEqual(str(context.exception), "Password must contain at least 6 characters")
+
     def test_register_raises_value_error_when_the_password_has_no_uppercase(self):
-        # Assert ValueError, message "Password must contain at least 1
-        # uppercase character", for a password such as "codes123": long
-        # enough, has lowercase, has a digit, no capital letter.
-        pass
+        # Act and Assert
+        with self.assertRaises(ValueError) as context:
+            self.service.register("bobby", "codes123")
 
-    @unittest.skip("TODO - delete this line and write the test")
+        self.assertEqual(
+            str(context.exception), "Password must contain at least 1 uppercase character"
+        )
+
     def test_register_raises_value_error_when_the_password_has_no_lowercase(self):
-        # Assert ValueError, message "Password must contain at least 1
-        # lowercase character", for a password such as "CODES123". Remember
-        # the uppercase rule runs first, so the password must contain a
-        # capital or you will get the other message.
-        pass
+        # Act and Assert
+        with self.assertRaises(ValueError) as context:
+            self.service.register("bobby", "CODES123")
 
-    @unittest.skip("TODO - delete this line and write the test")
+        self.assertEqual(
+            str(context.exception), "Password must contain at least 1 lowercase character"
+        )
+
     def test_register_accepts_a_password_whose_only_digit_is_zero(self):
-        # A borderline happy path. Assert that register("bobby", "Codes0")
-        # returns "bobby", because "Codes0" does contain a number: zero is a
-        # number. Six characters, one capital, lowercase letters, one digit.
-        # This is the kind of case a naive "is it truthy" check gets wrong.
-        pass
+        # Act and Assert. "Codes0" does contain a number - zero is a number.
+        result = self.service.register("bobby", "Codes0")
+
+        self.assertEqual(result, "bobby")
 
     # -----------------------------------------------------------------
     # login()
     # -----------------------------------------------------------------
 
-    @unittest.skip("TODO - delete this line and write the test")
     def test_login_returns_the_username_after_a_successful_registration(self):
-        # Test case 1 from the guide's test plan, and it behaves exactly as
-        # written. Arrange by registering "bobby" / "Codes123", act by
-        # logging in with the same pair, assert "bobby" comes back.
-        pass
+        # Arrange
+        self.service.register("bobby", "Codes123")
 
-    @unittest.skip("TODO - delete this line and write the test")
+        # Act
+        result = self.service.login("bobby", "Codes123")
+
+        # Assert
+        self.assertEqual(result, "bobby")
+
     def test_login_raises_value_error_when_the_username_is_none(self):
-        # Assert ValueError, message "Username and password must not be
-        # null". Note login() uses one shared message for both arguments,
-        # unlike register(), which names whichever one is missing.
-        pass
+        # Act and Assert
+        with self.assertRaises(ValueError) as context:
+            self.service.login(None, "Codes123")
 
-    @unittest.skip("TODO - delete this line and write the test")
+        self.assertEqual(str(context.exception), "Username and password must not be null")
+
     def test_login_raises_value_error_when_the_password_is_none(self):
-        # Assert the same message, "Username and password must not be null",
-        # this time with a valid username and a None password. Two separate
-        # inputs reaching one message is worth two separate test cases.
-        pass
+        # Act and Assert
+        with self.assertRaises(ValueError) as context:
+            self.service.login("bobby", None)
 
-    @unittest.skip("TODO - delete this line and write the test")
+        self.assertEqual(str(context.exception), "Username and password must not be null")
+
     def test_login_raises_value_error_when_the_username_is_whitespace_only(self):
-        # Assert ValueError with the message "Username and password must not
-        # be empty" for a whitespace-only username.
-        pass
+        # Act and Assert
+        with self.assertRaises(ValueError) as context:
+            self.service.login("   ", "Codes123")
 
-    @unittest.skip("TODO - delete this line and write the test")
+        self.assertEqual(str(context.exception), "Username and password must not be empty")
+
     def test_login_raises_runtime_error_when_the_user_was_never_registered(self):
-        # The one case in this file that is NOT a ValueError. Log in as a
-        # user who was never registered and assert RuntimeError with the
-        # message "Invalid username supplied". RuntimeError is the Python
-        # stand-in for Java's RuntimeException. Get the expected type wrong
-        # and assertRaises will not catch it, so the test errors rather than
-        # failing, which looks different in the output.
-        pass
+        # Act and Assert
+        with self.assertRaises(RuntimeError) as context:
+            self.service.login("ghost", "Codes123")
 
-    @unittest.skip("TODO - delete this line and write the test")
+        self.assertEqual(str(context.exception), "Invalid username supplied")
+
     def test_login_raises_value_error_when_the_password_is_wrong(self):
-        # Arrange by registering "bobby" / "Codes123", then log in as "bobby"
-        # with a different valid-looking password such as "Wrong123", and
-        # assert ValueError with the message "Invalid password supplied".
-        # Note the pair: an unknown user gives RuntimeError, a known user
-        # with the wrong password gives ValueError. Two messages, two types,
-        # two test cases.
-        pass
+        # Arrange
+        self.service.register("bobby", "Codes123")
+
+        # Act and Assert
+        with self.assertRaises(ValueError) as context:
+            self.service.login("bobby", "Wrong123")
+
+        self.assertEqual(str(context.exception), "Invalid password supplied")
 
 
 if __name__ == "__main__":
