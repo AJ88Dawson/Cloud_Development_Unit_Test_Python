@@ -1,0 +1,39 @@
+# A minimal "hello world" GitHub Actions workflow.
+#
+# This is exercise 2, part 1, step 3: a starter workflow to learn the shape
+# of an Actions file before wiring up the real test suite.
+name: Hello World
+
+# WHEN to run this workflow. "on:" lists the triggers. Here it runs on every
+# push to any branch, and also lets you trigger it manually from the Actions
+# tab (workflow_dispatch), which is handy while you are still learning it.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# WHAT to run. A workflow is made of one or more jobs, and each job runs on
+# its own fresh virtual machine ("runner").
+jobs:
+  say-hello:
+    # The type of machine GitHub spins up to run this job.
+    runs-on: ubuntu-latest
+
+    # A job is a list of steps, run in order, top to bottom.
+    steps:
+      # actions/checkout is almost always your first step: it pulls your
+      # repository's code onto the runner, because the runner starts empty.
+      - name: Check out the repository
+        uses: actions/checkout@v4
+
+      # A plain shell step. "run:" executes commands exactly as if you had
+      # typed them into a terminal on the runner.
+      - name: Print a greeting
+        run: echo "Hello, world! This job ran from GitHub Actions."
+
+      # A second step, to show that steps in a job share the same runner and
+      # execute one after another.
+      - name: Show where we are and what's here
+        run: |
+          pwd
+          ls -la
